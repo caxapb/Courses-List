@@ -1,4 +1,4 @@
-import { availableCourses } from '../data/courses.js';
+import { availableCourses } from './data/courses.js';
 
 const searchInput = document.querySelector('.search-input');
 const state = {
