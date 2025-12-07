@@ -13,36 +13,38 @@ init();
 function init() {
   updateCategoryCounts();
   loadCurrentPage();
-  // renderPagination();
   setupListeners();
 }
 
 function updateCategoryCounts() {
-  ` Функция для рендеринга и подсчета количества курсов в каждой категории.
+  ` Функция для формирования и подсчета количества курсов в каждой категории.
     На основе полученного списка курсов формируется map, в котором лежат пары категория-количество
     После генерации разметки списка категорий, формируется внутреннее содержимое элементов-спанов: 
     число, означающее количество курсов
     Как исходная точка, обозначаем категорию All как активную (выбранную)
   `
+  // Подсчет категорий
   COURSES.forEach((course) => {
     const current = CATEGORIES.get(course.category) || 0;
     CATEGORIES.set(course.category, current + 1);
-    CATEGORIES.set('All', CATEGORIES.get('All') + 1)
   });
+  CATEGORIES.set('All', COURSES.length);
 
+  // Формирование разметки для категорий
   renderCategories();
-  const countSpans = document.querySelectorAll('.choose-category-count');
 
+  // После того как разметка была сформирована, эдитим числа внутри
+  const countSpans = document.querySelectorAll('.choose-category-count');
   countSpans.forEach((span) => {
     const categoryName = span.dataset.categoryName;
     if (categoryName === 'All') {
       span.innerHTML = `${COURSES.length}`;
-
     } else {
       span.innerHTML = `${CATEGORIES.get(categoryName) || 0}`;
     }
   });
 
+  // Выбираем "Все" как текущий выбор категории
   document.getElementsByClassName('choose-category-button')[0].classList.add('choose-category-button-active');
 }
 
@@ -65,11 +67,12 @@ function renderCategories() {
 }
 
 function loadCurrentPage() {
+  ` Функция для формирования текущего списка карточек, которые будут отображаться
+    Требуется для поддержки пагинации (Загрузить больше)
+  `
   const filtered = getFilteredCourses();
   const pageItems = filtered.slice(0, state.limit);
-
   renderCards(pageItems);
-  // renderPagination();
 }
 
 
@@ -155,9 +158,12 @@ function setupListeners() {
   ` Функция для задавания ивент слушателей
     1) Кнопки для фильтра по категории. На каждую кнопку вешаем слушатель кликов. При нажатии берем имя
     выбранной категории из data аттрибута, если эта категория уже активна, то ничего не делаем. Иначе
-    удаляем класс -active у каждой категории, а выбранной добавляем его.
+    удаляем класс -active у каждой категории, а выбранной добавляем его. Также при нажатии - сброс 
+    количества отображаемых карточек: избежать кейса, когда пользователь находится в поле Маркетинг,
+    нажимает "загрузить еще", и при обратном переходе на вкладку "все" отображаются так же 9 карточек
     2) Поиск. При изменении контента в поле input получаем этот контент и созраняем его в состоянии state
-    В обоих слушателях после обработки событий "перегазружаем" страницу с помощью loadCurrentPage() 
+    3) Дополнительная загрузка карточек. Увеличение лимита в состоянии
+    Во всех слушателях после обработки событий "перегазружаем" страницу с помощью loadCurrentPage() 
   `
 
   const categoryButtons = Array.from(document.getElementsByClassName('choose-category-button'));
@@ -167,7 +173,6 @@ function setupListeners() {
       if (activeCategory === state.category) return;
 
       state.category = activeCategory;
-      state.page = 1;
 
       categoryButtons.forEach((btn) =>
         btn.classList.remove('choose-category-button-active')
@@ -184,75 +189,10 @@ function setupListeners() {
       loadCurrentPage();
     });
   }
+
   const button = document.querySelector('.load-more-button');
   button.addEventListener('click', () => {
     state.limit += 9;
-    const filtered = getFilteredCourses().slice(0, state.limit);
-    renderCards(filtered);
+    loadCurrentPage();
   })
 }
-
-
-
-// function renderPagination() {
-//   const paginationContainer = document.querySelector('.pagination-container');
-//   paginationContainer.innerHTML = '';
-
-//   if (state.totalPages <= 1) {
-//     return;
-//   }
-
-//   const fragment = document.createDocumentFragment();
-
-//   // Кнопка "назад"
-//   const prevButton = document.createElement('button');
-//   prevButton.className = 'pagination__button pagination__button_prev';
-//   prevButton.textContent = 'Prev';
-//   prevButton.disabled = state.page === 1;
-//   prevButton.addEventListener('click', () => {
-//     if (state.page > 1) {
-//       state.page -= 1;
-//       loadCurrentPage();
-//     }
-//   });
-//   fragment.appendChild(prevButton);
-
-//   // Номера страниц
-//   for (let page = 1; page <= state.totalPages; page += 1) {
-//     const btn = document.createElement('button');
-//     btn.className = 'pagination__button';
-//     if (page === state.page) {
-//       btn.classList.add('pagination__button_active');
-//     }
-//     btn.textContent = String(page);
-//     btn.addEventListener('click', () => {
-//       if (page !== state.page) {
-//         state.page = page;
-//         loadCurrentPage();
-//       }
-//     });
-//     fragment.appendChild(btn);
-//   }
-
-//   // Кнопка "вперёд"
-//   const nextButton = document.createElement('button');
-//   nextButton.className = 'pagination__button pagination__button_next';
-//   nextButton.textContent = 'Next';
-//   nextButton.disabled = state.page === state.totalPages;
-//   nextButton.addEventListener('click', () => {
-//     if (state.page < state.totalPages) {
-//       state.page += 1;
-//       loadCurrentPage();
-//     }
-//   });
-//   fragment.appendChild(nextButton);
-
-//   paginationContainer.appendChild(fragment);
-// }
-
-// function renderPagination() {
-//   const button = document.querySelector('.load-more-button');
-//   button.addEventListener('click', () => {
-//     state.limit += 9;
-//   })
-// }
