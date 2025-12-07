@@ -1,0 +1,246 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Lato;
+  margin-top: 50px;
+}
+
+header {
+  top: -6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header h6 {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #1E212C;
+  height: 24px; 
+}
+header h1 {
+  font-weight: 900;
+  font-size: 46px;
+  line-height: 130%;
+  letter-spacing: 0%;
+}
+
+
+
+.categories-container {
+  margin-top: 85px;
+  display: flex;
+  justify-content: space-between;
+  width: 63vw;
+}
+.choose-category-container {
+  display: flex;
+  justify-content: space-between;
+}
+.choose-category-button {
+  background-color: white;
+  border-radius: 4px;
+  padding: 10px 20px 10px 20px;
+  color: #9A9CA5;
+  border: none;
+  cursor: pointer;
+}
+.choose-category-button-active {
+  color: #FF3F3A;
+  border: #FF3F3A solid 1px;
+}
+.choose-category-name {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 160%;
+  letter-spacing: 0%;
+  text-align: center;
+}
+.choose-category-count {
+  font-weight: 900;
+  font-size: 10px;
+  line-height: 150%;
+  letter-spacing: 0%;
+  text-align: center;
+  vertical-align: top;
+}
+
+
+.search-container {
+  display: inline-block;
+  position: relative;
+}
+.search-input {
+  min-width: 50px;
+  max-width: 315px;
+  height: 44px;
+  padding: 11px 40px 11px 16px;
+  border-radius: 4px;
+  border: 1px solid #D7DADD;
+}
+.choose-category-count {
+  font-weight: 900;
+  font-size: 10px;
+  line-height: 150%;
+  letter-spacing: 0%;
+  text-align: center;
+}
+.search-container img {
+  position: absolute;
+  width: 14px;
+  transform: translateY(100%);
+  right: 15px;
+}
+
+
+
+
+.courses-grid-container {
+  margin-top: 60px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 30px;
+}
+
+.card {
+  /* box-shadow: 0px 4px 4px -4px #1E212C08; */
+  /* box-shadow: 0px 12px 10px -6px #9A9CA50A; */
+  /* box-shadow: 0px 30px 24px -10px #0404040d; */
+  box-shadow: 0px 80px 80px -20px #25252814;
+  border: 1px solid #E5E8ED;  
+  width: 20vw;
+  height: 30vh;
+  min-height: 420px;
+  border-radius: 4px;
+  border-width: 1px;
+  opacity: 1;
+}
+.card img {
+  width: 100%;
+  opacity: 1;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  }
+.card-content {
+  padding: 24px;
+  display: grid;
+  gap: 20px;
+}
+.badge {
+  padding: 1px 8px 1px 8px;
+  border-radius: 4px;
+  background-color: #03CEA4;
+  border: none;
+  color: white;
+}
+.course-title {
+  font-family: Lato;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 150%;
+  letter-spacing: 0%;
+  color: #1E212C;
+}
+.course-price {
+  color: #FF4242;
+}
+.course-author {
+  color: #787A80;
+}
+
+.pagination-container {
+  margin-top: 80px;
+  margin-bottom: 70px;
+  width: 200px;
+}
+
+.load-more-button {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 160%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  color: #424551;
+  background-color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+}
+.load-more-button img {
+  height: 20px;
+}
+
+@media screen and (max-width: 1510px) {
+  .choose-category-name {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 150%;
+    letter-spacing: 0%;
+    text-align: center;
+  }
+  .choose-category-count {
+    font-weight: 900;
+    font-size: 10px;
+    line-height: 150%;
+    letter-spacing: 0%;
+    text-align: center;
+    vertical-align: top;
+  }
+  .choose-category-button {
+    padding: 8px 14px 8px 14px;
+  }
+}
+
+@media screen and (max-width: 1080px) {
+  .courses-grid-container {
+    grid-template-columns: 1fr 1fr;
+  }
+  .card {
+    width: 40vw;
+  }
+  .categories-container {
+    width: 82vw;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+}
+@media screen and (max-width: 520px) {
+  .courses-grid-container {
+    grid-template-columns: 1fr;
+
+  }
+  .card {
+    width: 80vw;
+  }
+  header h6 {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 120%;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #1E212C;
+    height: 18px; 
+  }
+  header h1 {
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 110%;
+    letter-spacing: 0%;
+  }
+
+  .choose-category-container {
+    flex-direction: column;
+  }
+}
